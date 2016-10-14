@@ -25,9 +25,10 @@ v0.8.0
 ++++++++++++
 is developped under django 1.9.5 and does NOT work with older Django releases.
 
-v0.7.3
+v0.7.4
 ++++++++++++
 is developped under django 1.8.x and does NOT work with older Django releases.
+Installation : pip -e git+https://github.com/mwolff44/yawd-admin.git@0.7.4#egg=yawd-admin
 
 v0.7.2
 ++++++++++++

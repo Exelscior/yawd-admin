@@ -2,7 +2,7 @@
 from __future__ import unicode_literals
 
 import json
-from django.conf.urls import patterns, url
+from django.conf.urls import url
 from django.contrib import admin
 from django.contrib.admin.options import InlineModelAdmin
 try:
@@ -111,14 +111,14 @@ class PopupModelAdmin(admin.ModelAdmin):
         urls = super(PopupModelAdmin, self).get_urls()
 
         info = self.model._meta.app_label, self.model._meta.model_name
-        my_urls = patterns('',
+        my_urls = [
             url(r'^(.+)/ajax/delete/$',
                 self.admin_site.admin_view(self.ajaxdelete_view),
                 name="%s_%s_deleteit" % info),
             url(r'^ajax/reorder/$',
                 self.admin_site.admin_view(self.inline_reorder),
                 name="%s_%s_inlinereorder" % info),
-        )
+        ]
         return my_urls + urls
 
     def inline_reorder(self, request):
@@ -180,7 +180,7 @@ class SortableModelAdmin(admin.ModelAdmin):
         urls = super(SortableModelAdmin, self).get_urls()
 
         info = self.model._meta.app_label, self.model._meta.model_name
-        my_urls = patterns('',
+        my_urls = [
             url(r'^sortables/$',
                 self.admin_site.admin_view(self.sortables),
                 name="%s_%s_sortables" % info),
@@ -190,7 +190,7 @@ class SortableModelAdmin(admin.ModelAdmin):
             url(r'^ajax/$',
                 self.admin_site.admin_view(self.partial_changelist_view),
                 name="%s_%s_partial_changelist" % info),
-        )
+        ]
         return my_urls + urls
 
     def _reorder(self, data, request):

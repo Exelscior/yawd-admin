@@ -3,7 +3,7 @@ import httplib2
 from functools import update_wrapper
 from oauth2client.file import Storage
 from django import VERSION as DJANGO_VERSION
-from django.conf.urls import patterns, url
+from django.conf.urls import url
 from django.conf import settings
 from django.contrib.admin.sites import AdminSite
 from django.core.cache import cache
@@ -198,13 +198,13 @@ class YawdAdminSite(AdminSite):
                 return self.admin_view(view, cacheable)(*args, **kwargs)
             return update_wrapper(wrapper, view)
 
-        up = patterns('',
+        up = [
                       url(r'^configuration-options/(?P<optionset_label>%s)/$' % '|'.join(_optionset_labels.keys()), wrap(AppOptionView.as_view()), name='optionset-label-options'),
                       url(r'^oauth2callback/$', wrap(AnalyticsAuthView.as_view()), name='oauth2-callback'),
                       url(r'^google-analytics/$', wrap(AnalyticsConfigView.as_view()), name='analytics'),
                       url(r'^google-analytics/connect/$', wrap(AnalyticsConnectView.as_view()), name='analytics-connect'),
                       url(r'^my-account/$', wrap(MyAccountView.as_view()), name='my-account'),
-            )
+        ]
 
         up += super(YawdAdminSite, self).get_urls()
         return up
